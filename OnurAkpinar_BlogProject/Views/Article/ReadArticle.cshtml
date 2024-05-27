@@ -1,0 +1,49 @@
+﻿@model Article
+@{
+    Layout = "_Layout";
+}
+
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-body">
+                    <!-- Başlık -->
+                    <div class="border-bottom pb-3 mb-3">
+                        <h1 class="card-title">@Model?.ArticleHeader</h1>
+                    </div>
+
+                    <!-- Yazan Kişi Bilgileri -->
+                    <div class="d-flex align-items-center mb-3">
+
+                       
+                        @if (!string.IsNullOrEmpty(Model.Member.PictureFilePath))
+                        {
+                            <img src="~/images/@Model.Member.PictureFilePath" class="rounded-circle mr-3" alt="Author Picture" width="50" height="50">
+                        }
+                        <div>
+                            <a asp-action="MemberArticles" asp-controller="Article" asp-route-id="@Model.Member.Id" class="text-dark font-weight-bold">
+                                Yazar:@Model.Member.FirstName @Model.Member.LastName
+                            </a>
+                            <br>
+                            <small class="text-muted">Paylaşılma Tarihi:@Model.CreatedDate.ToString("MMMM dd, yyyy")</small>
+                        </div>
+                    </div>
+
+                    <!-- İçerik -->
+                    <div class="card-text mb-3">
+                        <div class="border-left pl-3">
+                            @Model.ArticleContent
+                        </div>
+                    </div>
+
+                    <!-- Ortalama Okuma Süresi -->
+                    <div>
+                        <span class="badge badge-primary">Okuma Süresi: @Model.ReadingTime dakika</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

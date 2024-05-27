@@ -1,0 +1,78 @@
+﻿@model Article_DTO
+
+<style>
+    .checkbox-container {
+        display: inline-block; /* İç içe geçmiş div'lerin yan yana gelmesini sağlar */
+        margin-right: 10px; /* İstenilen boşluğu sağlar */
+    }
+    .btn-check:checked + .btn {
+        background-color: darkslateblue; /* Seçildiğinde arka plan rengi */
+        color: #fff; /* Seçildiğinde metin rengi */
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 0.375rem 0.75rem;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        user-select: none;
+        border: 1px solid transparent;
+        border-radius: 0.25rem;
+        transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
+    }
+</style>
+<h3 class="text-center">Makale Yaz</h3>
+
+
+<hr />
+<div class="row justify-content-center">
+    <div class="col-md-8 text-center">
+        <form asp-controller="Article" asp-action="Create" method="post" enctype="multipart/form-data">
+           
+            <div class="form-group">
+                <label asp-for="@Model.ArticleHeader" class="control-label fw-bold">Başlık</label>
+                <input asp-for="@Model.ArticleHeader" class="form-control" />
+                
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.ArticleContent" class="control-label fw-bold">Makale</label>
+                <textarea asp-for="@Model.ArticleContent" class="form-control"></textarea>
+                
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.ReadingTime" class="control-label fw-bold">Okuma Süresi(dk)</label>
+                <input asp-for="@Model.ReadingTime" class="form-control" />
+              
+            </div>
+            <br />
+            <br />
+            <p class="fw-bold">Bu makalenin dahil olduğu konuları seçiniz!</p>
+            <br />
+            
+                
+                    @foreach (var topic in Model.Topics)
+                    {
+                        <div class="checkbox-container">
+                            <input type="checkbox" class="btn-check" name="SelectedTopics" value="@topic.TopicID" id="btn-check-@topic.TopicID"        autocomplete="off">
+                            <label class="btn" for="btn-check-@topic.TopicID">@topic.TopicName</label>
+                        </div>
+                    }
+                
+           
+            <br />
+            <br />
+            <div class="form-group">
+                <button type="submit" value="Kaydet" class="btn btn-success" />Kaydet</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

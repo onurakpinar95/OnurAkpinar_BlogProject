@@ -1,0 +1,49 @@
+﻿
+@inject UserManager<Member> UserManager
+@inject SignInManager<Member> SignInManager
+
+
+
+@if (SignInManager.IsSignedIn(User))
+{
+	@if(User.IsInRole("Member"))
+	{
+		<li class="nav-item">
+			<a class="nav-link" asp-controller="Home" asp-action="Index">Home</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" asp-controller="Home" asp-action="Privacy">About Us</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" asp-controller="Article" asp-action="Index">My Articles</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" asp-controller="Article" asp-action="Create">New Article</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" asp-controller="Topic" asp-action="Index">Topics</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" asp-controller="Account" asp-action="Account">My Account</a>
+		</li>
+		<div style="padding-left:600px">
+			<a asp-controller="Login" asp-action="LogOut" class="btn btn-danger">Çıkış</a>
+		</div>
+	}
+}
+else
+{
+	<li class="nav-item">
+		<a class="nav-link" asp-controller="Home" asp-action="Index">Home</a>
+	</li>
+	<li class="nav-item">
+		<a class="nav-link" asp-controller="Home" asp-action="AboutUs">About Us</a>
+	</li>
+
+	<div class="ml-auto" style="padding-left:600px">
+		<a asp-controller="Login" asp-action="Login" class="btn btn-outline-info">Giriş Yap</a>
+		<a asp-controller="Login" asp-action="Register" class="btn btn-outline-info">Kaydol</a>
+
+	</div>
+}
+

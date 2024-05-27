@@ -1,0 +1,8 @@
+﻿@model Member
+
+<p>@Model.FirstName </p>
+
+<h3>Hesabını Silmek İstediğine Emin Misin?</h3>
+    <a asp-controller="Account" asp-action="DeleteConfirm" asp-route-id="@Model.Id" class="btn btn-danger">Sil</a>|
+    <a asp-action="Account" class="btn btn-warning">Vazgeç</a>
+

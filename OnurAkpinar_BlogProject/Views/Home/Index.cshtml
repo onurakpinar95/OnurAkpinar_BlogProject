@@ -1,0 +1,168 @@
+﻿@inject UserManager<Member> UserManager
+@inject SignInManager<Member> SignInManager
+@model ArticleVM
+
+@{
+    Layout = "_Layout";
+}
+
+
+@{
+    if (TempData["Info"] != null)
+    {
+        <div class="alert alert-success m-0"> @TempData["Info"]</div>
+    };
+}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            @if (SignInManager.IsSignedIn(User))
+            {
+              
+                if (Model.MemberTopics.Count > 0)
+                {
+                    <h2>Takip Ettiğiniz Konular</h2>
+                    <ul>
+                        @foreach (var topic in Model.MemberTopics) // Model.FollowedTopics -> Kullanıcının takip ettiği konular
+                        {
+                            <li>@topic.TopicName</li>
+                        }
+                    </ul>
+                      <a class="btn btn-outline-success" asp-controller="Topic" asp-action="Index" >Daha fazla konu takip etmek için tıklayın!</a>
+                      <hr />
+                    <div class="row">
+                        <h3>İlgi Alanlarınıza Göre Makaleler</h3>
+                        @foreach (var topic in Model.MemberTopics)
+                        {
+
+                            <h3>@topic.TopicName</h3>
+                            <hr />
+                            @foreach (var article in topic.TopicArticles)
+                            {
+
+
+                                <div class="col-md-4">
+                                    <div class="card mb-4 shadow-sm">
+
+                                        <div class="card-body">
+                                            <a asp-controller="Article" asp-action="ReadArticle" asp-route-id="@article.ArticleID" class="text-success"><h5 class="card-title">@article.Article.ArticleHeader</h5></a>
+                                            <p class="card-text">@article.Article.ArticleContent.Substring(0, Math.Min(100, @article.Article.ArticleContent.Length))...</p>
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <small class="text-muted">Yazar:@article.Article.Member.FirstName @article.Article.Member.LastName </small>
+                                            </div>
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <small class="text-muted">Okuma Süresi: @article.Article.ReadingTime dakika</small>
+                                            </div>
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <small class="text-muted"> Okunma Sayısı: @article.Article.ViewCounter </small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            }
+                        }
+
+
+                    </div>
+                }
+                else
+                {
+                    <h3>Aşağıdaki Konuları Takip Edebilirsiniz</h3>
+                    <form asp-controller="Home" asp-action="Index" method="post">
+                        <div>
+                            @foreach (var topic in Model.AddableTopics) // Model.Topics -> Tüm konular
+                            {
+                                <div>
+                                    <input type="checkbox" id="topic_@topic.TopicName" name="FollowedTopics" value="@topic.TopicID">
+                                    <label for="topic_@topic.TopicName">@topic.TopicName</label>
+                                </div>
+                            }
+                        </div>  
+                        <button type="submit" class="btn btn-primary">Ekle</button>
+                    </form>
+                }
+
+
+            }
+           
+            <hr />
+            <div class="row">
+                <h3> En çok okunan Makalaler</h3>
+                @foreach (var article in Model.Articles)
+                {
+                    <div class="col-md-4">
+                        <div class="card mb-4 shadow-sm">
+
+                            <div class="card-body">
+                                <a asp-controller="Article" asp-action="ReadArticle" asp-route-id="@article.ArticleID" class="text-success"><h5 class="card-title">@article.ArticleHeader</h5></a>
+                                <p class="card-text">@article.ArticleContent.Substring(0, Math.Min(100, article.ArticleContent.Length))...</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small class="text-muted">Yazar:@article.Member.FirstName @article.Member.LastName </small>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small class="text-muted"> Okuma Süresi: @article.ReadingTime dakika</small>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small class="text-muted"> Okunma Sayısı: @article.ViewCounter </small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <hr />
+
+            <!-- Her konuda çeşitli makaleler -->
+        
+            <div class="row">
+                <h3>Konular</h3>
+                 @foreach (var topic in Model.Topics)
+                 {
+                  
+                            <h3>@topic.TopicName</h3>
+                   @foreach(var article in topic.TopicArticles)
+                      {
+                        
+                       
+                            <div class="col-md-4">
+                                <div class="card mb-4 shadow-sm">
+
+                                    <div class="card-body">
+                                        <a asp-controller="Article" asp-action="ReadArticle" asp-route-id="@article.ArticleID" class="text-success"><h5 class="card-title">@article.Article.ArticleHeader</h5></a>
+                                        <p class="card-text">@article.Article.ArticleContent.Substring(0, Math.Min(100, @article.Article.ArticleContent.Length))...</p>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <small class="text-muted">Yazar:@article.Article.Member.FirstName @article.Article.Member.LastName </small>
+                                        </div>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <small class="text-muted">Okuma Süresi: @article.Article.ReadingTime dakika</small>
+                                        </div>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <small class="text-muted"> Okunma Sayısı: @article.Article.ViewCounter </small>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        
+
+                       }
+                 }
+
+                 
+            </div>
+              
+        </div>
+        <div class="col-md-4">
+            <!-- Hakkımızda -->
+            <div class="card-body">
+                <h2>Nemo Blog</h2>
+                <p>Her türlü bilgiyi edinebileceğiniz makalelerimiz için bizleri takipte kalın</p>
+                <a asp-controller="Home" asp-action="Privacy" class="btn btn-primary">Daha Fazla Bilgi</a>
+            </div>
+        </div>
+    </div>
+</div>

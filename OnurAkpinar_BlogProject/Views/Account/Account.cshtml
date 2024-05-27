@@ -1,0 +1,37 @@
+﻿@model Member
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kullanıcı Profili</title>
+    <style>
+        .avatar {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 20px;
+        }
+
+        .container {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <img src="~/images/@Model.PictureFilePath" class="avatar mt-2">
+        <br />
+        
+        <div class="container">
+            <p>Adım: @Model.FirstName</p>
+            <p>Soyadım: @Model.LastName</p>
+            <p>Biyografim: @Model.About</p>
+            <p>Emailim: @Model.UserName</p>
+            <a class="btn btn-primary " asp-action="Edit" asp-controller="Account">Bilgilerimi Güncelle</a>
+            <a class="btn btn-primary " asp-action="Index" asp-controller="Article">Yazdığım Makaleler</a>
+            <a class="btn btn-danger" asp-action="Delete" asp-controller="Account" asp-route-id="@Model.Id">Hesabımı Sil</a>
+        </div>
+    </main>
+</body>
+</html>

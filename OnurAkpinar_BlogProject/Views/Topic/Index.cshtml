@@ -1,0 +1,43 @@
+﻿@model IEnumerable<OnurAkpinar_BlogProject.Models.Entities.Topic>
+
+@{
+    if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger m-0"> @TempData["Error"]</div>
+    };
+}
+
+@{
+    if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success m-0"> @TempData["Success"]</div>
+    };
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Konu Adı
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TopicName)
+            </td>
+            <td>
+                <a asp-controller="Topic" asp-action="FollowTopic" asp-route-id="@item.TopicID">Takip Et</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

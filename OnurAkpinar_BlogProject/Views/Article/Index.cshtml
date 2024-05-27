@@ -1,0 +1,65 @@
+﻿@model IEnumerable<OnurAkpinar_BlogProject.Models.Entities.Article>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ArticleHeader)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ArticleContent)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReadingTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ViewCounter)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Member)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ArticleHeader)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ArticleContent)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReadingTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ViewCounter)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Member.Id)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ArticleID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ArticleID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ArticleID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

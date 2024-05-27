@@ -1,0 +1,77 @@
+﻿@model IEnumerable<OnurAkpinar_BlogProject.Models.Entities.Article>
+@{
+    var firstArticle = Model.FirstOrDefault(); // Model içindeki ilk makaleyi alıyoruz
+}
+
+@if (firstArticle != null)
+{
+    <div class="d-flex align-items-center mb-3">
+       
+        @if (!string.IsNullOrEmpty(firstArticle.Member.PictureFilePath))
+        {
+            <img src="~/images/@firstArticle.Member.PictureFilePath" class="rounded-circle mr-3" alt="Author Picture" width="50" height="50">
+        }
+        <div>
+            <a asp-action="MemberArticles" asp-controller="Article" asp-route-id="@firstArticle.Member.Id" class="text-dark font-weight-bold">
+                Yazar: @firstArticle.Member.FirstName @firstArticle.Member.LastName
+            </a>
+            <br>
+            <small class="text-muted">Paylaşılma Tarihi: @firstArticle.CreatedDate.ToString("MMMM dd, yyyy")</small>
+        </div>
+    </div>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ArticleHeader)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ArticleContent)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReadingTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ViewCounter)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Member)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ArticleHeader)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ArticleContent)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReadingTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ViewCounter)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.Member.FirstName) @Html.DisplayFor(modelItem => item.Member.LastName)
+            </td>
+            <td>
+
+                <a asp-action="ReadArticle" asp-controller="Article" asp-route-id="@item.ArticleID">Makaleyi Oku</a> |
+
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
